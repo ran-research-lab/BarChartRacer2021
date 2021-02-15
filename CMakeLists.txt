@@ -33,6 +33,8 @@ set(PROJECT_SOURCES
         barchartracer.h
         barchart.cpp
         barchart.h
+        bar.cpp
+        bar.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

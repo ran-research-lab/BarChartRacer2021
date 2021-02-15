@@ -10,15 +10,16 @@ BarChartRacer::BarChartRacer(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(advance()));
     timer->start(500);
 
-    scene = new QGraphicsScene(this);
-    view = new QGraphicsView(scene);
+    scene = new QGraphicsScene(parent);
+    view  = new QGraphicsView(scene);
 
     QGraphicsRectItem * rect = new QGraphicsRectItem();
     rect->setRect(0,0,600, 400);
     scene->addItem(rect);
 
-    barChart = new BarChart;
+    barChart = new BarChart("Un Titulo", "Un Label", "Un data source");
     barChart->setScene(scene);
+
     view->show();
 }
 
@@ -29,13 +30,15 @@ BarChartRacer::~BarChartRacer() {
 }
 
 void BarChartRacer::advance() {
-    barChart->setMap(allData[idx]);
-    barChart->setTitle(titles[idx]);
+
+    barChart->reset();
+    for(const auto &e: allData[idx])
+        barChart->add(e.name,e.value,e.category);
+
+    barChart->setCaption(captions[idx]);
     barChart->paint();
+
     idx = (idx + 1) % allData.size();
 }
 
-void BarChartRacer::paint() {
 
-
-}
